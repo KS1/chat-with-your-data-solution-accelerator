@@ -73,22 +73,39 @@ services:
           interactive: true
           continueOnError: false
 
-  adminweb:
-    project: ./code/backend
-    language: py
-    host: appservice
-    # Use resourceName
-    resourceName: ${SERVICE_ADMINWEB_RESOURCE_NAME}
-    hooks:
-      prepackage:
-        windows:
-          shell: pwsh
-          run: poetry install; poetry export -o requirements.txt
-          continueOnError: false
-        posix:
-          shell: sh
-          run: poetry install; poetry export -o requirements.txt
-          continueOnError: false
+adminweb:
+  project: ./code/backend
+  language: py
+  host: appservice
+  resourceName: ${SERVICE_ADMINWEB_RESOURCE_NAME}
+  hooks:
+    prepackage:
+      windows:
+        shell: pwsh
+        run: pip install -r ../../requirements.txt
+        continueOnError: false
+      posix:
+        shell: sh
+        run: pip install -r ../../requirements.txt
+        continueOnError: false
+
+  # Kartiki Modified adminweb block as above
+  # adminweb:
+  #   project: ./code/backend
+  #   language: py
+  #   host: appservice
+  #   # Use resourceName
+  #   resourceName: ${SERVICE_ADMINWEB_RESOURCE_NAME}
+  #   hooks:
+  #     prepackage:
+  #       windows:
+  #         shell: pwsh
+  #         run: poetry install; poetry export -o requirements.txt
+  #         continueOnError: false
+  #       posix:
+  #         shell: sh
+  #         run: poetry install; poetry export -o requirements.txt
+  #         continueOnError: false
 
   # Kartiki removed this function block to resolve installation issue
   # function:
